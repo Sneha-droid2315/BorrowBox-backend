@@ -21,15 +21,13 @@ const runSeed = async (): Promise<void> => {
     await connectDB();
     console.log('[Seed] Clearing existing development collections...');
 
-    await Promise.all([
-      User.deleteMany({}),
-      Item.deleteMany({}),
-      BorrowRequest.deleteMany({}),
-      Review.deleteMany({}),
-      Notification.deleteMany({}),
-      Wishlist.deleteMany({}),
-      Report.deleteMany({}),
-    ]);
+    await User.deleteMany({});
+    await Item.deleteMany({});
+    await BorrowRequest.deleteMany({});
+    await Review.deleteMany({});
+    await Notification.deleteMany({});
+    await Wishlist.deleteMany({});
+    await Report.deleteMany({});
 
     const defaultPasswordHash = await bcrypt.hash('Password123!', 10);
 
@@ -307,12 +305,10 @@ const runSeed = async (): Promise<void> => {
       },
     ]);
 
-    await Promise.all([
-      syncUserReputation(priya._id),
-      syncUserReputation(rohan._id),
-      syncUserReputation(aarav._id),
-      syncUserReputation(meera._id),
-    ]);
+    await syncUserReputation(priya._id);
+    await syncUserReputation(rohan._id);
+    await syncUserReputation(aarav._id);
+    await syncUserReputation(meera._id);
 
     await Wishlist.create([
       { user: aarav._id, item: items[6]._id },

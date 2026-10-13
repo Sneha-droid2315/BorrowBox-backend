@@ -45,7 +45,7 @@ const signToken = (user: IUser): string => {
 };
 
 const setAuthCookie = (res: Response, token: string): void => {
-  const isProd = env.NODE_ENV === 'production';
+  const isProd = env.NODE_ENV === 'production' || Boolean(process.env.VERCEL);
   res.cookie('borrowbox_token', token, {
     httpOnly: true,
     secure: isProd,
@@ -117,7 +117,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 });
 
 export const logout = asyncHandler(async (_req: Request, res: Response) => {
-  const isProd = env.NODE_ENV === 'production';
+  const isProd = env.NODE_ENV === 'production' || Boolean(process.env.VERCEL);
   res.clearCookie('borrowbox_token', {
     httpOnly: true,
     secure: isProd,
